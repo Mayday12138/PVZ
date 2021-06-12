@@ -8,6 +8,10 @@ import javax.swing.ImageIcon;
 public class Car{
     int x;
     int y;
+    musicplayer musicplayerA;
+    /**
+     * 0保持静止，1发动
+     */
     int state;
     Car(int x,int y)
     {
@@ -22,6 +26,10 @@ public class Car{
         g.drawImage(tu, x, y, null);//绘制图片API
     }
 
+    /**
+     * 发动过程中使接触到的僵尸状态切换为死亡
+     * @param jsList
+     */
     public void rush_action(ArrayList<Zombie> jsList)
     {
         if(this.state==1)
@@ -39,6 +47,12 @@ public class Car{
             tobecleared_entry();
         }
     }
+
+    /**
+     * 判断有无碰到僵尸，是否发动
+     * @param jsList 僵尸数组
+     * @return 碰到的僵尸数组
+     */
     private ArrayList<Zombie> run_touchZombie(ArrayList<Zombie> jsList){
 
         ArrayList<Zombie> zb=new ArrayList<Zombie>();
@@ -46,7 +60,12 @@ public class Car{
         {
             Zombie zombie= jsList.get(ge);
             if(new Rectangle(x, y, 30, 20).intersects(zombie.getX()+30, zombie.getY()+81, 80, 20))
+            {
                 zb.add(zombie);
+                musicplayerA = new musicplayer("植物大战僵尸/声音/carmove.wav");
+                musicplayerA.state=1;
+                musicplayerA.start_play_once();
+            }
         }
         if(zb.isEmpty())
         return null;

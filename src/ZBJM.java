@@ -11,8 +11,13 @@ import javax.swing.ImageIcon;
 
 public class ZBJM
 {
-    //属性声明
-    int kuan=0;//292
+    /**
+     * 进度条的长度
+     */
+    int kuan=0;
+    /**
+     * 区分不同界面，1是加载界面，2是菜单界面
+     */
     int	jiemian =1;
     musicplayer           bfq;
     Play			play;
@@ -23,6 +28,7 @@ public class ZBJM
         bfq = new musicplayer("植物大战僵尸/声音/Faster.wav");
         bfq.start_play();
     }
+
 
     void Draw(Graphics g)
     {
@@ -50,16 +56,6 @@ public class ZBJM
             Image tu = (new ImageIcon("植物大战僵尸/背景/转化界面.png")).getImage();
             g.drawImage(tu, 0, 0, null);//绘制图片API
         }
-        else if(jiemian==3)//关于我们
-        {
-            Image tu = (new ImageIcon("植物大战僵尸/背景/我是猛男.png")).getImage();
-            g.drawImage(tu, 0, 0, null);//绘制图片API
-        }
-        else if(jiemian==4)//选卡界面
-        {
-            Image tu = (new ImageIcon("植物大战僵尸/背景/游戏结束界面.png")).getImage();
-            g.drawImage(tu, 0, 0, null);//绘制图片API
-        }
     }
 
     private void jindutiao()
@@ -83,26 +79,21 @@ public class ZBJM
         }
         else if(jiemian==2&&new Rectangle(365,65,245,55).contains(mx, my))
         {
-            //play.ksjm.bfq.Stop_Player();
+            play.ksjm.bfq.Stop_Player();
             play.ksjm=null;
             play.xzjm = new XZJM( play );
             play.xzjm.init();
-
         }
         else if(jiemian==2&&new Rectangle(371,156,246,55).contains(mx, my))
         {
-            jiemian=3;
+            play.ksjm.bfq.Stop_Player();
+            play.ksjm=null;
+            play.yxjm2 = new YXJM2( play );
+            play.yxjm2.init();
         }
         else if(jiemian==2&&new Rectangle(370,266,236,55).contains(mx, my))
         {
             System.exit(0);
         }
-        else if(jiemian==3&&new Rectangle(0,0,800,600).contains(mx, my))
-        {
-            jiemian=2;
-        }
-
     }
-
-
 }

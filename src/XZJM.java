@@ -5,18 +5,34 @@ import java.util.Random;
 
 public class XZJM
 {
+    /**
+     * 判断是否已经选择完毕
+     */
     int state=0;
+    /**
+     * 图片转场时的参数
+     */
     int i=0;
     musicplayer       bfq;
     Play		play;
+    /**
+     * 所有可以选择的卡片
+     */
     ArrayList<Card> kpList1;
+    /**
+     * 已选择的卡片
+     */
     ArrayList<Card> kpList2;
     ArrayList<Zombie> jsList;
     XZJM(Play	play){
         this.play=play;
-
+        bfq = new musicplayer("植物大战僵尸/声音/choose.wav");
+        bfq.start_play();
     }
 
+    /**
+     * 初始化
+     */
     public void init(){
         kpList1=new ArrayList<>();
         kpList2=new ArrayList<>();
@@ -68,12 +84,6 @@ public class XZJM
                 Image tu5 = (new ImageIcon("植物大战僵尸/僵尸/普通僵尸/Zombie"+jsList.get(j).type+"/Frame"+jsList.get(j).picture+".png")).getImage();
                 g.drawImage(tu5, jsList.get(j).x+i, jsList.get(j).y, null);//绘制图片API
             }
-            i=i+5;
-            if(i-600==-220){
-                play.yxjm = new YXJM( play ,kpList2);
-                play.xzjm=null;
-                play.yxjm.init();
-            }
         }
 
 
@@ -85,6 +95,14 @@ public class XZJM
         for (int i = 0; i <= jsList.size() - 1; i = i + 1) {
             jsList.get(i).go_forward_ChangePicture();
 
+        }
+        if(state==1){
+            i=i+20;
+            if(i-600==-220){
+                play.yxjm = new YXJM( play ,kpList2);
+                play.xzjm=null;
+                play.yxjm.init();
+            }
         }
     }
 
@@ -106,7 +124,7 @@ public class XZJM
 
         if(new Rectangle(165,552,155,60).contains(mx, my))
         {
-            //play.ksjm.bfq.Stop_Player();
+            bfq.Stop_Player();
             state=1;
         }
 

@@ -11,6 +11,14 @@ abstract public class Zombie
     int Health;
     int picture;
     int speed=2;
+    /**
+     * 为“咀嚼.wav”播放停顿时间，避免叠音
+     */
+    int out=0;//用于吃植物停顿声音
+    musicplayer musicplayerA;
+    /**
+     * 用于判断是否被减速
+     */
     int time=0;//是否被减速
     int type;
     public void setX(int x) {
@@ -48,6 +56,15 @@ abstract public class Zombie
     public void go_forward_action(Plant[][] zws)
     {
         x-=speed;
+
+        if(Health<=0)
+        {
+            die();
+        }
+        if(zws==null){
+            return;
+        }
+
         for(  int h= 0 ; h<= 4  ; h=h+ 1   )
         {
             for(  int l= 0 ; l<= 8  ; l=l+ 1   )
@@ -58,10 +75,7 @@ abstract public class Zombie
                 }
             }
         }
-        if(Health<=0)
-        {
-            die();
-        }
+
     }
 
     void eat()
@@ -96,6 +110,14 @@ abstract public class Zombie
             {
                 if(touch_plant(zws[h][l]))
                 {
+                    if(out>10)
+                    {
+                        musicplayerA = new musicplayer("植物大战僵尸/声音/咀嚼.wav");
+                        musicplayerA.state=1;
+                        musicplayerA.start_play_once();
+                        out=0;
+                    }
+                    out++;
                     zws[h][l].Health--;
                 }
             }

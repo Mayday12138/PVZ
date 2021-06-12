@@ -8,6 +8,9 @@ public class Shovel {
     int x;
     int y;
     int picture;
+    /**
+     *
+     */
     int state;
     public Shovel(int x,int y)
     {

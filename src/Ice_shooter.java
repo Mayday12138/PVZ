@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class Ice_shooter extends Plant{
 
+    /**
+     * 寒冰射手初始化
+     * @param x
+     * @param y
+     */
     public Ice_shooter( int x , int y)
     {
         this.x=x;
@@ -17,18 +22,30 @@ public class Ice_shooter extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 摇摆初始化
+     */
     private void Ice_shooter_swing_entry()
     {
         Health=50;
         state=1;
     }
 
+    /**
+     * 摇摆展示
+     * @param g
+     */
     private void Ice_shooter_swing_diplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/冰冻豆瓣/SnowPea/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 摇摆活动
+     * @param jsList
+     */
     private void Ice_shooter_swing_action(ArrayList<Zombie> jsList)
     {
         if(picture==14)
@@ -51,11 +68,19 @@ public class Ice_shooter extends Plant{
         }
     }
 
+    /**
+     * 攻击初始化
+     */
     private void Ice_shooter_attack_entry()
     {
         state =2 ;
     }
 
+    /**
+     * 攻击活动
+     * @param jsList
+     * @param zdList
+     */
     private void Ice_shooter_attack_action(ArrayList<Zombie> jsList,ArrayList<Bullet> zdList)
     {
         if(picture==14)
@@ -76,6 +101,11 @@ public class Ice_shooter extends Plant{
         }
 
         Ice_shooter_XuLi();
+        if(anger==20){
+            musicplayerA = new musicplayer("植物大战僵尸/声音/shoot.wav");
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
+        }
         if(Ice_shooter_judge_XuLi())
         {
             //造子弹
@@ -88,6 +118,10 @@ public class Ice_shooter extends Plant{
 
     }
 
+    /**
+     * 攻击展示
+     * @param g
+     */
     private void Ice_shooter_attack_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/冰冻豆瓣/SnowPea/Frame"+picture+".png")).getImage();

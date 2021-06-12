@@ -9,8 +9,16 @@ public class Bullet
 {
     int x;
     int y;
+    musicplayer musicplayerA;
+    /**
+     * 0普通子弹，1寒冰子弹，2星星子弹
+     */
     int type;
-    int way;//way用于判别子弹的飞行模式，当前为Star服务，而后可添加抛掷类
+    /**
+     * way用于判别子弹的飞行模式，当前为Star服务，而后可添加抛掷类
+     * 0向前飞，1向上飞，2向后飞，3向下飞，4斜向下45°飞
+     */
+    int way;//
     /**
      * 1.飞行2.爆炸3.待清除
      */
@@ -30,6 +38,10 @@ public class Bullet
         state=1;
     }
 
+    /**
+     * 飞行过程中子弹展示
+     * @param g
+     */
     private void fly_display(Graphics g)
     {
         if(type==0){
@@ -45,7 +57,10 @@ public class Bullet
             g.drawImage(tu, x+34, y+80, null);//绘制图片API
         }
     }
-
+    /**
+     * 飞行过程中子弹活动，并判断是否打击到僵尸
+     * @param jsList 僵尸数组
+     */
     public void fly_action(ArrayList<Zombie> jsList)
     {
         if(this.way==0)
@@ -79,31 +94,45 @@ public class Bullet
             tobecleared_entry();
         }
     }
-
+    /**
+     * 飞行过程中子弹活动，并判断是否打击到僵尸
+     * @param zombie 僵尸
+     */
     private boolean judge_touchZombie(Zombie zombie)
     {
         if(new Rectangle(x, y, 30, 30).intersects(zombie.getX()+30, zombie.getY(), 80, 100))
             return true;
         return false;
     }
-
+    /**
+     * 爆炸初始化
+     */
     private void explode_entry()
     {
         state=2;
 
     }
-
+    /**
+     * 爆炸显示
+     * @param g
+     */
     private void explode_diplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/炮弹/炮弹爆炸.png")).getImage();
         g.drawImage(tu, x+10, y+60, null);//绘制图片API
     }
 
+    /**
+     * 爆炸活动
+     */
     private void explode_action(ArrayList<Zombie> jsList)
     {
         tobecleared_entry();
     }
 
+    /**
+     * 待清除初始化
+     */
     private void tobecleared_entry()
     {
         state=3;
@@ -117,6 +146,9 @@ public class Bullet
         }
         else if(state==2)
         {
+            musicplayerA = new musicplayer("植物大战僵尸/声音/子弹撞击.wav");
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
             explode_action(jsList);
         }
     }

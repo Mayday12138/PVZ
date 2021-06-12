@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class Hot_pepper extends Plant{
     int picture2;
+
+    /**
+     * 火爆辣椒初始化
+     * @param x
+     * @param y
+     */
     public Hot_pepper( int x , int y)
     {
         this.x=x;
@@ -17,6 +23,10 @@ public class Hot_pepper extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 变大初始化
+     */
     private void Hot_pepper_bigger_entry()
     {
         picture=0;
@@ -25,12 +35,19 @@ public class Hot_pepper extends Plant{
         Health=500;
     }
 
+    /**
+     * 变大展示
+     * @param g
+     */
     private void Hot_pepper_bigger_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/辣椒/Jalapeno/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 变大活动
+     */
     private void Hot_pepper_bigger_action()
     {
         if(picture==7)
@@ -44,17 +61,28 @@ public class Hot_pepper extends Plant{
 
     }
 
+    /**
+     * 爆炸初始化
+     */
     private void Hot_pepper_explore_entry()
     {
         state=2;
     }
 
+    /**
+     * 爆炸展示
+     * @param g
+     */
     private void Hot_pepper_explore_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/辣椒/JalapenoAttack/Frame"+picture2+".png")).getImage();
         g.drawImage(tu,40, 51+y, null);//绘制图片API?
     }
 
+    /**
+     * 爆炸活动
+     * @param jsList
+     */
     private void Hot_pepper_explore_action(ArrayList<Zombie> jsList)
     {
         picture2++;
@@ -72,6 +100,10 @@ public class Hot_pepper extends Plant{
         }
     }
 
+    /**
+     * 判断是否攻击刀僵尸
+     * @param mb
+     */
     private boolean whether_hurt_zombie(Zombie mb)
     {
         if(new Rectangle(0, 81+y, 1200, 70).intersects(mb.getX()+34, mb.getY() +81, 80, 100))

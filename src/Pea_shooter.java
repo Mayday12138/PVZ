@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class Pea_shooter extends Plant{
 
+    /**
+     * 豌豆射手初始化
+     * @param x
+     * @param y
+     */
     public Pea_shooter( int x , int y)
     {
         this.x=x;
@@ -19,17 +24,29 @@ public class Pea_shooter extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 摇摆初始化
+     */
     public void Pea_shooter_swing_entry()
     {
         state=1;
     }
 
+    /**
+     * 摇摆显示
+     * @param g
+     */
     public void Pea_shooter_swing_diplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/豆瓣/Peashooter/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 摇摆活动
+     * @param jsList
+     */
     public void Pea_shooter_swing_action(ArrayList<Zombie> jsList)
     {
         if(picture==max_picture)
@@ -52,11 +69,19 @@ public class Pea_shooter extends Plant{
         }
     }
 
+    /**
+     * 攻击初始化
+     */
     public void Pea_shooter_attack_entry()
     {
         state =2 ;
     }
 
+    /**
+     * 攻击活动
+     * @param jsList
+     * @param zdList
+     */
     public void Pea_shooter_attack_action(ArrayList<Zombie> jsList,ArrayList<Bullet> zdList)
     {
         if(picture==max_picture)
@@ -78,6 +103,11 @@ public class Pea_shooter extends Plant{
         }
 
         Pea_shooter_XuLi();
+        if(anger==20){
+            musicplayerA = new musicplayer("植物大战僵尸/声音/shoot.wav");
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
+        }
         if(Pea_shooter_judge_XuLi())
         {
             //造子弹
@@ -90,6 +120,10 @@ public class Pea_shooter extends Plant{
 
     }
 
+    /**
+     * 攻击展示
+     * @param g
+     */
     public void Pea_shooter_attack_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/豆瓣/Peashooter/Frame"+picture+".png")).getImage();
@@ -133,8 +167,10 @@ public class Pea_shooter extends Plant{
         }
     }
 
-
-
+    /**
+     * 判断该路上是否有僵尸
+     * @param jsList
+     */
     public boolean judge_Zombies(ArrayList<Zombie> jsList)
     {
         for(  int i= 0 ; i< jsList.size(); i++)
@@ -149,16 +185,26 @@ public class Pea_shooter extends Plant{
         return false;
     }
 
+    /**
+     * 蓄力
+     */
     public void Pea_shooter_XuLi()
     {
         anger++;
     }
 
+    /**
+     * 判断是否已经蓄好力
+     * @return
+     */
     public boolean Pea_shooter_judge_XuLi()
     {
         return anger>=25;
     }
 
+    /**
+     * 卸力
+     */
     public void Pea_shooter_XieLi()
     {
         anger=0;

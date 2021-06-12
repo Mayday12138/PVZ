@@ -11,12 +11,18 @@ public class yangguang
     int x;
     int y;
     int maxy;
-    int state;//1是活动2是待清除
+    /**
+     * 1是活动2是待清除
+     */
+    int state;
     int Sun_num;
     int picture;
     int time;
     int a=10;
 
+    /**
+     * 阳光初始化
+     */
     public yangguang()
     {
         state=1;
@@ -48,6 +54,9 @@ public class yangguang
         }
     }
 
+    /**
+     * 阳光掉落
+     */
     public void fall()
     {
         if(state==1){
@@ -67,6 +76,12 @@ public class yangguang
 
     }
 
+    /**
+     * 判断鼠标是否点击阳光
+     * @param mx
+     * @param my
+     * @return
+     */
     boolean  is_touch(int mx,int my)
     {
         if(new Rectangle(34+x,81+ y, 78, 78).contains(mx, my))
@@ -76,6 +91,9 @@ public class yangguang
         return false;
     }
 
+    /**
+     * 阳光被吸入左上角
+     */
     public void movetoend(){
         int xx=x+10;
         int yy=y+60;

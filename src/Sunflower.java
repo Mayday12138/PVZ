@@ -5,6 +5,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Sunflower extends Plant{
+    /**
+     * 向日葵初始化
+     * @param x
+     * @param y
+     */
+
     public Sunflower( int x , int y)
     {
         this.x=x;
@@ -19,19 +25,29 @@ public class Sunflower extends Plant{
         shadow_display_entry();
     }
 
-
+    /**
+     * 摇摆初始化
+     */
     private void sunflower_swing_entry()
     {
         state=1;
         Health=50;
     }
 
+    /**
+     * 摇摆展示
+     * @param g
+     */
     private void sunflower_swing_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/向日葵/SunFlower/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 摇摆活动，生产阳光
+     * @param ygList
+     */
     private void sunflower_swing_action(ArrayList<yangguang>   ygList)
     {
         if(picture==17)

@@ -16,19 +16,27 @@ public class Cherrybomb extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+    /**
+     * 变大初始化
+     */
     private void bomb_bigger_entry()
     {
         picture=0;
         state=1;
         Health=500;
     }
-
+    /**
+     * 变大展示
+     * @param g
+     */
     private void bomb_bigger_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/爆炸草莓/CherryBomb/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
-
+    /**
+     * 变大活动
+     */
     private void bomb_bigger_action()
     {
         if(picture==6)
@@ -39,20 +47,29 @@ public class Cherrybomb extends Plant{
         {
             picture++;
         }
-
     }
-
+    /**
+     * 爆炸初始化
+     */
     private void bomb_explore_entry()
     {
         state=2;
     }
 
+    /**
+     * 爆炸展示
+     * @param g
+     */
     private void bomb_explore_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/爆炸草莓/Boom.gif")).getImage();
         g.drawImage(tu,x-33, 51+y, null);//绘制图片API
     }
 
+    /**
+     * 爆炸展示
+     * @param jsList 僵尸数组
+     */
     private void bomb_explore_action(ArrayList<Zombie> jsList)
     {
         anger++;
@@ -69,7 +86,10 @@ public class Cherrybomb extends Plant{
             shawdow_erase_exit();
         }
     }
-
+    /**
+     * 判断是否炸到僵尸
+     * @param mb 僵尸
+     */
     private boolean whether_hurt_zombie(Zombie mb)
     {
         if(new Rectangle(x-46, y-19, 240, 300).intersects(mb.getX()+34, mb.getY() +81, 80, 100))
@@ -89,7 +109,6 @@ public class Cherrybomb extends Plant{
         {
             bomb_explore_display(g);
         }
-
     }
 
     public void action(ArrayList<Zombie> jsList,ArrayList<Bullet> zdList,ArrayList<yangguang> ygList)
@@ -101,10 +120,11 @@ public class Cherrybomb extends Plant{
         if(state==2)
         {
             bomb_explore_action(jsList);
+            musicplayerA = new musicplayer("植物大战僵尸/声音/bomb.wav");//测试播放时机问题
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
         }
-
     }
-
 
     public void shadow_display(Graphics g)
     {

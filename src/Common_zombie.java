@@ -6,6 +6,11 @@ public class Common_zombie extends Zombie{
 
     int max_picture;
 
+    /**
+     * 普通僵尸初始化
+     * @param x
+     * @param y
+     */
     public Common_zombie( int x,int y)
     {
         Random random=new Random();
@@ -26,13 +31,20 @@ public class Common_zombie extends Zombie{
         }
     }
 
-
+    /**
+     * 行走展示
+     * @param g
+     */
     void go_forward_display(Graphics g)
     {
             Image tu = (new ImageIcon("植物大战僵尸/僵尸/普通僵尸/Zombie"+type+"/Frame"+picture+".png")).getImage();
             g.drawImage(tu, x, y, null);//绘制图片API
 
     }
+
+    /**
+     * 行走换图
+     */
     void go_forward_ChangePicture()
     {
         if(state==6){
@@ -52,12 +64,19 @@ public class Common_zombie extends Zombie{
         }
     }
 
+    /**
+     * 吃展示
+     * @param g
+     */
     void eat_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/僵尸/普通僵尸/ZombieAttack/Frame"+picture+".png")).getImage();
         g.drawImage(tu, x, y, null);//绘制图片API
     }
 
+    /**
+     * 吃换图
+     */
     void eat_ChangePicture()
     {
         if(picture==20)

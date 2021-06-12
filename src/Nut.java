@@ -3,6 +3,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Nut extends Plant{
+    /**
+     * 坚果初始化
+     * @param x
+     * @param y
+     */
     public Nut( int x , int y)
     {
         this.x=x;
@@ -18,18 +23,29 @@ public class Nut extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 满状态初始化
+     */
     private void Nut_full_healthy_entry()
     {
         state=1;
         Health=500;
     }
 
+    /**
+     * 满状态展示
+     * @param g
+     */
     private void Nut_full_healthy_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/坚果/WallNut/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 满状态活动
+     */
     private void Nut_full_healthy_action()
     {
         if(picture==15)
@@ -47,18 +63,28 @@ public class Nut extends Plant{
         }
     }
 
+    /**
+     * 受伤初始化
+     */
     private void Nut_hurt_entry()
     {
         state=2;
         picture=0;
     }
 
+    /**
+     * 受伤展示
+     * @param g
+     */
     private void Nut_hurt_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/坚果/Wallnut_cracked1/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 受伤活动
+     */
     private void Nut_hurt_action()
     {
         if(picture==10)
@@ -76,19 +102,28 @@ public class Nut extends Plant{
         }
     }
 
-
+    /**
+     * 重伤初始化
+     */
     private void Nut_badlyhurt_entry()
     {
         state=3;
         picture=0;
     }
 
+    /**
+     * 重伤展示
+     * @param g
+     */
     private void Nut_badlyhurt_diaplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/坚果/Wallnut_cracked2/Frame"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
 
+    /**
+     * 重伤活动
+     */
     private void Nut_badlyhurt_action()
     {
         if(picture==14)

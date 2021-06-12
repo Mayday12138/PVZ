@@ -1,22 +1,47 @@
-import sun.print.SunAlternateMedia;
-
 import javax.swing.*;
 import java.awt.*;
-//import java.awt.event.*;
 import java.util.*;
 
-import static java.lang.System.exit;
 
 public class YXJM {
     Play play;
+    /**
+     * 播放背景音乐
+     */
+    musicplayer    bfq;
+    /**
+     *播放音效
+     */
+    musicplayer musicplayerA;
+    boolean ready=true;
     int creat = 20;
+    /**
+     * 胜利时只发出一次信号就结束线程
+     */
+    int vic=0;
+    /**
+     * 失败时只发出一次信号
+     */
+    int def=0;
     int count_z = 0;
     int check = 20;
     int totalnum_zombie=0;
-    int wintime=0;             //用于卡住系统时间，在展示胜利前杀死当前场景所有僵尸
+    /**
+     * 用于卡住系统时间，在展示胜利前杀死当前场景所有僵尸
+     */
+    int wintime=0;
+    /**
+     * 判断游戏是否结束
+     */
     boolean judge_end=false;
     int all_killed=0;
+    /**
+     * 判断是否胜利
+     */
     boolean victary=false;
+    /**
+     * 判断是否暂停
+     */
     boolean pause=false;
     public YXJM(Play play,ArrayList<Card> a) {
 
@@ -26,6 +51,8 @@ public class YXJM {
             kpList.get(i).num_of_picture=i;
             kpList.get(i).picture=0;
         }
+        bfq = new musicplayer("植物大战僵尸/声音/BGM1.wav");
+        bfq.start_play();
     }
 
     ArrayList<yangguang> ygList;
@@ -38,7 +65,6 @@ public class YXJM {
     Plant plant;
     Shovel shovel;
     int sunnum;
-    musicplayer bfq;
 
     void init() {
         ygList = new ArrayList<yangguang>();
@@ -60,7 +86,6 @@ public class YXJM {
             car.add(car1);
         }
         sunnum = 600;
-        bfq = new musicplayer("植物大战僵尸/声音/钢琴曲 - 2 - 植物大战僵尸.wav");
     }
 
     void Mouse_clicked(int mx, int my) {
@@ -74,7 +99,11 @@ public class YXJM {
                 if (kpList.get(i).whether_press(mx, my)) {
                     kpList.get(i).picture = 0;
                     plant = null;
-                } else if (zws[ah][al] == null) {
+                    musicplayerA = new musicplayer("植物大战僵尸/声音/放卡.wav");
+                    musicplayerA.state=1;
+                    musicplayerA.start_play_once();
+                }
+                else if (zws[ah][al] == null) {
                     if (kpList.get(i).name.equals("射手")) {
                         Plant newplant = new Pea_shooter(al * 80, ah * 100);
                         zws[ah][al] = newplant;
@@ -115,7 +144,9 @@ public class YXJM {
                         zws[ah][al] = newplant;
                         sunnum -= 125;
                     }
-
+                    musicplayerA = new musicplayer("植物大战僵尸/声音/放植物.wav");
+                    musicplayerA.state=1;
+                    musicplayerA.start_play_once();
                     kpList.get(i).picture = 0;
                     plant = null;
                 }
@@ -125,57 +156,65 @@ public class YXJM {
                         zws[ah][al] = newplant;
                         sunnum -= 250;
                     }
+                    musicplayerA = new musicplayer("植物大战僵尸/声音/放植物.wav");
+                    musicplayerA.state=1;
+                    musicplayerA.start_play_once();
                     kpList.get(i).picture = 0;
                     plant = null;
                 }
-            } else if (kpList.get(i).name.equals("射手") && kpList.get(i).whether_press(mx, my) && sunnum >= 100) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Pea_shooter)) {
-                    plant = new Pea_shooter(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("寒冰射手") && kpList.get(i).whether_press(mx, my) && sunnum >= 175) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Ice_shooter)) {
-                    plant = new Ice_shooter(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("向日葵") && kpList.get(i).whether_press(mx, my) && sunnum >= 50) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Sunflower)) {
-                    plant = new Sunflower(mx, my, 6);
-                }
-
-            } else if (kpList.get(i).name.equals("坚果") && kpList.get(i).whether_press(mx, my) && sunnum >= 50) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Nut)) {
-                    plant = new Nut(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("炸弹") && kpList.get(i).whether_press(mx, my) && sunnum >= 150) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Cherrybomb)) {
-                    plant = new Cherrybomb(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("火爆辣椒") && kpList.get(i).whether_press(mx, my) && sunnum >= 125) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Hot_pepper)) {
-                    plant = new Hot_pepper(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("食人花") && kpList.get(i).whether_press(mx, my) && sunnum >= 150) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Chomper)) {
-                    plant = new Chomper(mx, my, 6);
-                }
-            } else if (kpList.get(i).name.equals("杨桃") && kpList.get(i).whether_press(mx, my) && sunnum >= 125) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof StarPlant)) {
-                    plant = new StarPlant(mx, my, 6);
-                }
-            }else if (kpList.get(i).name.equals("机关枪") && kpList.get(i).whether_press(mx, my) && sunnum >= 250) {
-                kpList.get(i).picture = 1;
-                if (!(plant instanceof Repeater)) {
-                    plant = new Repeater(mx, my, 6);
-                }
             }
+            else if(kpList.get(i).whether_press(mx, my)){
+                if (kpList.get(i).name.equals("射手") && kpList.get(i).whether_press(mx, my) && sunnum >= 100) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Pea_shooter)) {
+                        plant = new Pea_shooter(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("寒冰射手") && kpList.get(i).whether_press(mx, my) && sunnum >= 175) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Ice_shooter)) {
+                        plant = new Ice_shooter(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("向日葵") && kpList.get(i).whether_press(mx, my) && sunnum >= 50) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Sunflower)) {
+                        plant = new Sunflower(mx, my, 6);
+                    }
 
+                } else if (kpList.get(i).name.equals("坚果") && kpList.get(i).whether_press(mx, my) && sunnum >= 50) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Nut)) {
+                        plant = new Nut(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("炸弹") && kpList.get(i).whether_press(mx, my) && sunnum >= 150) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Cherrybomb)) {
+                        plant = new Cherrybomb(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("火爆辣椒") && kpList.get(i).whether_press(mx, my) && sunnum >= 125) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Hot_pepper)) {
+                        plant = new Hot_pepper(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("食人花") && kpList.get(i).whether_press(mx, my) && sunnum >= 150) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Chomper)) {
+                        plant = new Chomper(mx, my, 6);
+                    }
+                } else if (kpList.get(i).name.equals("杨桃") && kpList.get(i).whether_press(mx, my) && sunnum >= 125) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof StarPlant)) {
+                        plant = new StarPlant(mx, my, 6);
+                    }
+                }else if (kpList.get(i).name.equals("机关枪") && kpList.get(i).whether_press(mx, my) && sunnum >= 250) {
+                    kpList.get(i).picture = 1;
+                    if (!(plant instanceof Repeater)) {
+                        plant = new Repeater(mx, my, 6);
+                    }
+                }
+                musicplayerA = new musicplayer("植物大战僵尸/声音/取卡.wav");
+                musicplayerA.state=1;
+                musicplayerA.start_play_once();
+            }
         }
 
         for (int ge = 0; ge <= ygList.size() - 1; ge = ge + 1) {
@@ -183,6 +222,10 @@ public class YXJM {
                 ygList.get(ge).state=3;
                 ygList.get(ge).movetoend();
                 sunnum += 25;
+
+                musicplayerA = new musicplayer("植物大战僵尸/声音/sun.wav");
+                musicplayerA.state=1;
+                musicplayerA.start_play_once();
             }
         }
 
@@ -200,7 +243,7 @@ public class YXJM {
             shovel.state = 1;
             shovel.moving(mx, my);
         }
-        if(judge_end)
+        if(judge_end&&def==3)
         {
             play.yxjm=null;
             play.ksjm=new ZBJM(play);
@@ -208,6 +251,9 @@ public class YXJM {
         }
         if(new Rectangle(750, 5, 30, 30).contains( mx, my)){
             pause=!pause;
+            musicplayerA = new musicplayer("植物大战僵尸/声音/pause.wav");
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
         }
         if(victary){
             play.yxjm=null;
@@ -230,14 +276,24 @@ public class YXJM {
         if (!judge_end)
             //背景显示
         {
+
             if (all_killed == 2&&jsList.size()==0) {
+                if(vic==0){
+                    musicplayerA = new musicplayer("植物大战僵尸/声音/victory.wav");//测试播放时机问题
+                    musicplayerA.state=1;
+                    musicplayerA.start_play_once();
+                    vic++;
+                }
                 Image tu = (new ImageIcon("植物大战僵尸/背景/victory.png")).getImage();
                 g.drawImage(tu, 317, 233, null);//绘制图片API
                 victary = true;
 
             } else {
                 if (totalnum_zombie == 120&&all_killed!=2) {
-
+                    bfq.Stop_Player();
+                    /*musicplayer musicplayer=new musicplayer("植物大战僵尸/音乐/defeat.wav");
+                    bfq2.add(musicplayer);
+                    bfq2.get(bfq2.size()-1).start_play_once();*/
                     all_killed=1;
                 }
 
@@ -287,7 +343,6 @@ public class YXJM {
                         jsList.get(i).die();
                     }
                     all_killed = 2;
-
                 }
             }
     }
@@ -298,8 +353,13 @@ public class YXJM {
     }
 
     void Timing_processing() {
-        //bfq.start_play();
         //0.随机生产僵尸================
+        if(ready){
+            musicplayerA = new musicplayer("植物大战僵尸/声音/僵尸进场.wav");
+            musicplayerA.state=1;
+            musicplayerA.start_play_once();
+            ready=false;
+        }
         if(all_killed==2){
             for (int i = 0; i <= jsList.size() - 1; i = i + 1) {
                 jsList.get(i).action(zws);
@@ -358,6 +418,27 @@ public class YXJM {
                     totalnum_zombie++;
                 } else if (jsList.get(i).x < -80) {
                     judge_end = true;
+                    if (def == 0) {
+                        musicplayerA = new musicplayer("植物大战僵尸/声音/defeat.wav");//测试播放时机问题
+                        musicplayerA.state=1;
+                        musicplayerA.start_play_once();
+                        def++;
+                    }
+                    else if(def==1){
+                        musicplayerA = new musicplayer("植物大战僵尸/声音/咀嚼.wav");//测试播放时机问题
+                        musicplayerA.state=1;
+                        def++;
+                    }
+                   else if(def==2){
+                       def++;
+                        musicplayerA = new musicplayer("植物大战僵尸/声音/scream.wav");//测试播放时机问题
+                        musicplayerA.state=1;
+                        musicplayerA.start_play_once();bfq.Stop_Player();
+
+                    }
+
+
+
                 }
             }
 

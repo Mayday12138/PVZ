@@ -3,7 +3,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Repeater extends Plant{
+    /**
+     * 用来决定四发子弹的发射时机
+     */
     int time=0;
+
+    /**
+     * 机枪射手初始化
+     * @param x
+     * @param y
+     */
     public Repeater( int x , int y)
     {
         this.x=x;
@@ -19,12 +28,20 @@ public class Repeater extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 摇摆初始化
+     */
     public void Pea_shooter_swing_entry()
     {
         state=1;
         time=0;
     }
 
+    /**
+     * 摇摆活动
+     * @param jsList
+     */
     public void Pea_shooter_swing_action(ArrayList<Zombie> jsList)
     {
         if(picture==max_picture)
@@ -47,12 +64,20 @@ public class Repeater extends Plant{
         }
     }
 
+    /**攻击初始化
+     *
+     */
     public void Pea_shooter_attack_entry()
     {
         state =2 ;
         time=8;
     }
 
+    /**
+     * 攻击活动
+     * @param jsList
+     * @param zdList
+     */
     public void Pea_shooter_attack_action(ArrayList<Zombie> jsList,ArrayList<Bullet> zdList)
     {
         if(picture==max_picture)

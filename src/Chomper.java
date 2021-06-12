@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class Chomper extends Plant{
 
-    //1.摇摆2.攻击3.咀嚼
+    /** state 1.摇摆2.攻击3.咀嚼
+     */
+
     public Chomper( int x , int y)
     {
         this.x=x;
@@ -18,18 +20,23 @@ public class Chomper extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+    /** 摇摆初始化
+     */
     private void Chomper_swing_entry()
     {
         Health=250;
         state=1;
     }
-
+    /** 摇摆显示 g
+     */
     private void Chomper_swing_diplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/食人花/Chomper/Frame"+picture+".png")).getImage();
-        g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
+        g.drawImage(tu,34 +x, 51+y, null);//绘制图片API
     }
-
+    /** 摇摆活动
+     * @param jsList 僵尸数组
+     */
     private void Chomper_swing_action(ArrayList<Zombie> jsList)
     {
         if(picture==12)
@@ -50,13 +57,16 @@ public class Chomper extends Plant{
             shawdow_erase_exit();
         }
     }
-
+    /** 攻击初始化
+     */
     private void Chomper_attack_entry()
     {
         state =2 ;
         picture=0;
     }
-
+    /** 攻击活动
+     * @param jsList 僵尸数组
+     */
     private void Chomper_attack_action(ArrayList<Zombie> jsList)
     {
         if(picture==8)
@@ -80,18 +90,24 @@ public class Chomper extends Plant{
             shawdow_erase_exit();
         }
     }
-
+    /** 摇摆展示
+     * @param g
+     */
     private void Chomper_attack_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/食人花/ChomperAttack/Frame"+picture+".png")).getImage();
-        g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
+        g.drawImage(tu,34 +x, 51+y, null);//绘制图片API
     }
+    /** 咀嚼初始化
+     */
     private void Chomper_chew_entry()
     {
         state =3 ;
         picture=0;
     }
-
+    /** 咀嚼活动
+     * @param jsList 僵尸数组
+     */
     private void Chomper_chew_action(ArrayList<Zombie> jsList)
     {
         if(picture==5)
@@ -114,13 +130,14 @@ public class Chomper extends Plant{
             anger=0;
             state=1;
         }
-
     }
-
+    /** 咀嚼展示
+     * @param g
+     */
     private void Chomper_chew_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/食人花/ChomperDigest/Frame"+picture+".png")).getImage();
-        g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
+        g.drawImage(tu,34 +x, 51+y, null);//绘制图片API
     }
     void display(Graphics g)
     {
@@ -151,7 +168,6 @@ public class Chomper extends Plant{
         else if(state==3){
             Chomper_chew_action(jsList);
         }
-
     }
 
     public void shadow_display(Graphics g)
@@ -161,10 +177,14 @@ public class Chomper extends Plant{
             Image tu = (new ImageIcon("植物大战僵尸/植物/食人花/Chomper/Frame0.png")).getImage();
             g.drawImage(tu,x, y, null);//绘制图片API
             Image tu1 = (new ImageIcon("植物大战僵尸/卡片/准备种植/食人花.png")).getImage();
-            g.drawImage(tu1,34+((x-34)/80)*80, 81+((y-81)/100)*100, null);//绘制图片API
+            g.drawImage(tu1,34+((x-34)/80)*80, 51+((y-81)/100)*100, null);//绘制图片API
         }
     }
 
+    /** 判断是否有僵尸在面前
+     * @param jsList 僵尸数组
+     * @return 在面前的僵尸
+     */
     public Zombie judge_Zombies(ArrayList<Zombie> jsList)
     {
         for(  int i= 0 ; i< jsList.size(); i++)
@@ -178,5 +198,4 @@ public class Chomper extends Plant{
         }
         return null;
     }
-
 }

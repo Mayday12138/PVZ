@@ -3,7 +3,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class StarPlant extends Plant{
-
+    /**
+     * 杨桃初始化
+     * @param x
+     * @param y
+     */
     public StarPlant(int x , int y)
     {
         this.x=x;
@@ -17,17 +21,30 @@ public class StarPlant extends Plant{
         this.state=state;
         shadow_display_entry();
     }
+
+    /**
+     * 摇摆初始化
+     */
     private void StarPlant_swing_entry()
     {
         Health=75;
         state=1;
     }
 
+    /**
+     * 摇摆展示
+     * @param g
+     */
     private void StarPlant_swing_diplay(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/Starfruit/杨桃/Starfruit-"+picture+".png")).getImage();
         g.drawImage(tu,34 +x, 81+y, null);//绘制图片API
     }
+
+    /**、
+     * 摇摆活动
+     * @param jsList
+     */
 
     private void StarPlant_swing_action(ArrayList<Zombie> jsList)
     {
@@ -51,11 +68,19 @@ public class StarPlant extends Plant{
         }
     }
 
+    /**
+     * 攻击初始化
+     */
     private void StarPlant_attack_entry()
     {
         state =2 ;
     }
 
+    /**
+     * 攻击活动
+     * @param jsList
+     * @param zdList
+     */
     private void StarPlant_attack_action(ArrayList<Zombie> jsList,ArrayList<Bullet> zdList)
     {
         if(picture==12)
@@ -96,6 +121,10 @@ public class StarPlant extends Plant{
 
     }
 
+    /**攻击展示
+     *
+     * @param g
+     */
     private void StarPlant_attack_display(Graphics g)
     {
         Image tu = (new ImageIcon("植物大战僵尸/植物/Starfruit/杨桃/Starfruit-"+picture+".png")).getImage();
