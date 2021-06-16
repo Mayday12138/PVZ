@@ -218,7 +218,7 @@ public class YXJM {
         }
 
         for (int ge = 0; ge <= ygList.size() - 1; ge = ge + 1) {
-            if (ygList.get(ge).is_touch(mx, my)) {
+            if (ygList.get(ge).is_touch(mx, my)&&ygList.get(ge).state!=3) {
                 ygList.get(ge).state=3;
                 ygList.get(ge).movetoend();
                 sunnum += 25;
@@ -369,7 +369,7 @@ public class YXJM {
             }
         }
 
-        else  if (!pause) {
+        else  if (!pause&&!judge_end&&!victary) {
             if (new Random().nextInt(1000) < creat) {//1.造僵尸
                 int x = 800;
                 int y = 100 * new Random().nextInt(5);
@@ -424,21 +424,17 @@ public class YXJM {
                         musicplayerA.start_play_once();
                         def++;
                     }
-                    else if(def==1){
+                    if(def==1){
                         musicplayerA = new musicplayer("植物大战僵尸/声音/咀嚼.wav");//测试播放时机问题
                         musicplayerA.state=1;
                         def++;
                     }
-                   else if(def==2){
+                   if(def==2){
                        def++;
                         musicplayerA = new musicplayer("植物大战僵尸/声音/scream.wav");//测试播放时机问题
                         musicplayerA.state=1;
                         musicplayerA.start_play_once();bfq.Stop_Player();
-
                     }
-
-
-
                 }
             }
 

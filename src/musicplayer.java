@@ -1,5 +1,10 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -9,7 +14,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class musicplayer
+public class musicplayer extends Thread
 {
 
     public String location;
@@ -18,12 +23,15 @@ public class musicplayer
      * 1.尚未开始 2.播放中3.结束
      */
     public int state;
+    private AudioClip clip;
 
     public musicplayer(String location)
     {
         this.location=location;
         state = 1;
+
     }
+
     public void start_play()
     {
         if(state != 1 ) return;
@@ -125,8 +133,9 @@ public class musicplayer
         //----------------------播放音频API  以上-------------------------------------
     }
 
+
     public void Stop_Player()
     {
-        state = 3;
+        state=3;
     }
 }
